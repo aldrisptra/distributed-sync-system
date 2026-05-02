@@ -1,0 +1,433 @@
+openapi: 3.0.3
+info:
+  title: Distributed Synchronization System API
+  description: API documentation for Distributed Lock Manager, Distributed Queue, Cache Coherence, Raft Consensus, and Metrics.
+  version: 1.0.0
+
+servers:
+  - url: http://127.0.0.1:8001
+    description: Node 1
+  - url: http://127.0.0.1:8002
+    description: Node 2
+  - url: http://127.0.0.1:8003
+    description: Node 3
+
+paths:
+  /health:
+    get:
+      summary: Health check node
+      tags:
+        - System
+      responses:
+        "200":
+          description: Node is running
+
+  /raft/status:
+    get:
+      summary: Get Raft node status
+      tags:
+        - Raft Consensus
+      responses:
+        "200":
+          description: Raft status including node state, term, leader, and log info
+
+  /raft/request-vote:
+    post:
+      summary: Internal Raft vote request
+      tags:
+        - Raft Consensus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                term:
+                  type: integer
+                candidate_id:
+                  type: string
+                last_log_index:
+                  type: integer
+                last_log_term:
+                  type: integer
+      responses:
+        "200":
+          description: Vote response
+
+  /raft/append-entries:
+    post:
+      summary: Internal Raft append entries and heartbeat
+      tags:
+        - Raft Consensus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                term:
+                  type: integer
+                leader_id:
+                  type: string
+                entries:
+                  type: array
+                  items:
+                    type: object
+                leader_commit:
+                  type: integer
+      responses:
+        "200":
+          description: Append entries response
+
+  /partition/enable:
+    post:
+      summary: Enable network partition simulation for current node
+      tags:
+        - Failure Simulation
+      responses:
+        "200":
+          description: Partition enabled
+
+  /partition/disable:
+    post:
+      summary: Disable network partition simulation for current node
+      tags:
+        - Failure Simulation
+      responses:
+        "200":
+          description: Partition disabled
+
+  /lock/acquire:
+    post:
+      summary: Acquire distributed lock
+      tags:
+        - Distributed Lock Manager
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - resource
+                - client_id
+                - lock_type
+              properties:
+                resource:
+                  type: string
+                  example: file-A
+                client_id:
+                  type: string
+                  example: client-1
+                lock_type:
+                  type: string
+                  enum:
+                    - shared
+                    - exclusive
+                  example: shared
+      responses:
+        "200":
+          description: Lock acquired successfully
+        "409":
+          description: Lock conflict, deadlock detected, or node is not leader
+
+  /lock/release:
+    post:
+      summary: Release distributed lock
+      tags:
+        - Distributed Lock Manager
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - resource
+                - client_id
+              properties:
+                resource:
+                  type: string
+                  example: file-A
+                client_id:
+                  type: string
+                  example: client-1
+      responses:
+        "200":
+          description: Lock released successfully
+        "409":
+          description: Node is not leader or release conflict
+
+  /lock/status:
+    get:
+      summary: Get lock manager status
+      tags:
+        - Distributed Lock Manager
+      responses:
+        "200":
+          description: Lock status, wait-for graph, and deadlock information
+
+  /queue/enqueue:
+    post:
+      summary: Add message to distributed queue
+      tags:
+        - Distributed Queue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - queue_name
+                - payload
+              properties:
+                queue_name:
+                  type: string
+                  example: orders
+                producer_id:
+                  type: string
+                  example: producer-1
+                payload:
+                  type: object
+                  example:
+                    order_id: 101
+                    item: laptop
+      responses:
+        "200":
+          description: Message enqueued successfully
+
+  /queue/dequeue:
+    post:
+      summary: Consume message from distributed queue
+      tags:
+        - Distributed Queue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - queue_name
+              properties:
+                queue_name:
+                  type: string
+                  example: orders
+                consumer_id:
+                  type: string
+                  example: consumer-1
+      responses:
+        "200":
+          description: Message dequeued successfully
+        "404":
+          description: Queue is empty
+
+  /queue/ack:
+    post:
+      summary: Acknowledge consumed message
+      tags:
+        - Distributed Queue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - queue_name
+                - message_id
+                - consumer_id
+              properties:
+                queue_name:
+                  type: string
+                  example: orders
+                message_id:
+                  type: string
+                  example: 123e4567-e89b-12d3-a456-426614174000
+                consumer_id:
+                  type: string
+                  example: consumer-1
+      responses:
+        "200":
+          description: Message acknowledged successfully
+        "404":
+          description: Message not found in processing queue
+
+  /queue/recover:
+    post:
+      summary: Recover expired processing messages
+      tags:
+        - Distributed Queue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - queue_name
+              properties:
+                queue_name:
+                  type: string
+                  example: orders
+      responses:
+        "200":
+          description: Expired messages recovered
+
+  /queue/status:
+    get:
+      summary: Get queue status
+      tags:
+        - Distributed Queue
+      parameters:
+        - name: queue_name
+          in: query
+          required: false
+          schema:
+            type: string
+          example: orders
+      responses:
+        "200":
+          description: Queue status and metrics
+
+  /cache/{key}:
+    get:
+      summary: Read value from distributed cache
+      tags:
+        - Distributed Cache
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+          example: user-1
+      responses:
+        "200":
+          description: Cache value found
+        "404":
+          description: Key not found
+
+    post:
+      summary: Write value to distributed cache
+      tags:
+        - Distributed Cache
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+          example: user-1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - value
+              properties:
+                client_id:
+                  type: string
+                  example: client-1
+                value:
+                  type: object
+                  example:
+                    name: Aldri
+                    balance: 100
+                propagation:
+                  type: string
+                  enum:
+                    - invalidate
+                    - update
+                  example: invalidate
+      responses:
+        "200":
+          description: Cache value written successfully
+
+    delete:
+      summary: Delete value from distributed cache
+      tags:
+        - Distributed Cache
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+          example: user-1
+      responses:
+        "200":
+          description: Cache value deleted successfully
+
+  /cache/status:
+    get:
+      summary: Get local cache status
+      tags:
+        - Distributed Cache
+      responses:
+        "200":
+          description: Cache state, MESI states, and metrics
+
+  /cache/internal/invalidate:
+    post:
+      summary: Internal cache invalidation endpoint
+      tags:
+        - Distributed Cache Internal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - key
+              properties:
+                key:
+                  type: string
+                source_node:
+                  type: string
+      responses:
+        "200":
+          description: Cache line invalidated
+
+  /cache/internal/update:
+    post:
+      summary: Internal cache update propagation endpoint
+      tags:
+        - Distributed Cache Internal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - key
+                - value
+                - updated_at
+              properties:
+                key:
+                  type: string
+                value:
+                  type: object
+                updated_at:
+                  type: number
+                source_node:
+                  type: string
+      responses:
+        "200":
+          description: Cache line updated from peer
+
+  /metrics:
+    get:
+      summary: Get system metrics
+      tags:
+        - Metrics
+      responses:
+        "200":
+          description: Metrics for Raft, lock manager, and cache

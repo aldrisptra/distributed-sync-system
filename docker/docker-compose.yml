@@ -1,0 +1,81 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: distributed-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - distributed-net
+
+  node1:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.node
+    container_name: distributed-node1
+    environment:
+      NODE_ID: node1
+      NODE_HOST: 0.0.0.0
+      NODE_PORT: 8001
+      NODE_ADDRESS: http://node1:8001
+      CLUSTER_NODES: http://node1:8001,http://node2:8002,http://node3:8003
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+      API_KEY: distributed-secret-key
+      LOG_LEVEL: INFO
+    ports:
+      - "8001:8001"
+    depends_on:
+      - redis
+    networks:
+      - distributed-net
+
+  node2:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.node
+    container_name: distributed-node2
+    environment:
+      NODE_ID: node2
+      NODE_HOST: 0.0.0.0
+      NODE_PORT: 8002
+      NODE_ADDRESS: http://node2:8002
+      CLUSTER_NODES: http://node1:8001,http://node2:8002,http://node3:8003
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+      API_KEY: distributed-secret-key
+      LOG_LEVEL: INFO
+    ports:
+      - "8002:8002"
+    depends_on:
+      - redis
+    networks:
+      - distributed-net
+
+  node3:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.node
+    container_name: distributed-node3
+    environment:
+      NODE_ID: node3
+      NODE_HOST: 0.0.0.0
+      NODE_PORT: 8003
+      NODE_ADDRESS: http://node3:8003
+      CLUSTER_NODES: http://node1:8001,http://node2:8002,http://node3:8003
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+      API_KEY: distributed-secret-key
+      LOG_LEVEL: INFO
+    ports:
+      - "8003:8003"
+    depends_on:
+      - redis
+    networks:
+      - distributed-net
+
+networks:
+  distributed-net:
+    driver: bridge
