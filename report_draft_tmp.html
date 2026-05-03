@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>report_draft.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="sistem-parallel-dan-terdistribusi">SISTEM PARALLEL DAN TERDISTRIBUSI</h1>
+<h1 id="implementasi-distributed-synchronization-system">Implementasi Distributed Synchronization System</h1>
+<hr>
+<h2 id="identitas">Identitas</h2>
+<p>Nama: Muhammad Aldri Saputra<br>
+NIM: 11231050<br>
+Mata Kuliah: Sistem Parallel dan Terdistribusi<br>
+Judul Tugas: Implementasi Distributed Synchronization System<br>
+Jenis Tugas: Tugas Individu</p>
+<hr>
+<h2 id="1-abstrak">1. Abstrak</h2>
+<p>Distributed system merupakan sistem yang terdiri dari beberapa node yang saling berkomunikasi untuk menjalankan suatu proses secara bersama-sama. Salah satu tantangan utama dalam distributed system adalah menjaga konsistensi data, sinkronisasi antar node, serta menangani kegagalan seperti node failure dan network partition.</p>
+<p>Pada tugas ini, dibuat sebuah sistem bernama Distributed Synchronization System. Sistem ini mensimulasikan tiga node yang saling berkomunikasi dan menjalankan beberapa fitur utama, yaitu Distributed Lock Manager, Distributed Queue, dan Distributed Cache Coherence.</p>
+<p>Distributed Lock Manager menggunakan simplified Raft Consensus untuk menentukan leader dan mereplikasi operasi lock. Distributed Queue menggunakan consistent hashing untuk menentukan owner queue, serta Redis sebagai penyimpanan message. Distributed Cache menggunakan protokol MESI untuk menjaga konsistensi cache antar node.</p>
+<p>Sistem ini juga dijalankan menggunakan Docker Compose agar setiap komponen seperti Redis, node1, node2, dan node3 dapat berjalan secara bersamaan. Pengujian dilakukan menggunakan command API dan Locust untuk melihat performa sistem pada beberapa skenario jumlah user.</p>
+<hr>
+<h2 id="2-pendahuluan">2. Pendahuluan</h2>
+<p>Sistem parallel dan terdistribusi memiliki peran penting dalam pengembangan aplikasi modern. Banyak sistem saat ini tidak hanya berjalan pada satu mesin, tetapi pada beberapa mesin atau node yang saling bekerja sama.</p>
+<p>Dalam distributed system, beberapa masalah utama yang sering muncul adalah sinkronisasi, konsistensi data, komunikasi antar node, failure handling, dan performa sistem. Oleh karena itu, dibutuhkan mekanisme tertentu agar node-node dalam sistem dapat tetap bekerja secara konsisten.</p>
+<p>Tugas ini berfokus pada implementasi sistem sinkronisasi terdistribusi. Sistem yang dibuat terdiri dari tiga node utama. Masing-masing node dapat menjalankan fungsi lock manager, queue, cache, serta ikut dalam proses leader election menggunakan Raft Consensus.</p>
+<hr>
+<h2 id="3-tujuan">3. Tujuan</h2>
+<p>Tujuan dari pembuatan sistem ini adalah:</p>
+<ol>
+<li>Mengimplementasikan Distributed Lock Manager dengan dukungan shared lock dan exclusive lock.</li>
+<li>Mengimplementasikan simplified Raft Consensus untuk leader election dan log replication.</li>
+<li>Mengimplementasikan deadlock detection menggunakan wait-for graph.</li>
+<li>Mengimplementasikan Distributed Queue menggunakan consistent hashing.</li>
+<li>Menyediakan message persistence dan at-least-once delivery menggunakan Redis.</li>
+<li>Mengimplementasikan Distributed Cache Coherence menggunakan protokol MESI.</li>
+<li>Mengimplementasikan LRU replacement policy pada cache lokal.</li>
+<li>Menjalankan sistem menggunakan Docker dan Docker Compose.</li>
+<li>Melakukan pengujian fitur dan performance testing menggunakan Locust.</li>
+</ol>
+<hr>
+<h2 id="4-teknologi-yang-digunakan">4. Teknologi yang Digunakan</h2>
+<p>Teknologi yang digunakan dalam project ini adalah:</p>
+<ul>
+<li>Teknologi - Keterangan</li>
+</ul>
+<hr>
+<ul>
+<li>Python 3.11 - Bahasa pemrograman utama</li>
+<li>asyncio - Menangani proses asynchronous</li>
+<li>aiohttp - Membuat HTTP server dan komunikasi antar node</li>
+<li>Redis - Penyimpanan queue dan cache backing store</li>
+<li>Docker - Containerization</li>
+<li>Docker Compose - Orchestration beberapa service</li>
+<li>Locust - Load testing dan performance benchmark</li>
+<li>PowerShell - Pengujian API secara lokal</li>
+</ul>
+<hr>
+<h2 id="5-arsitektur-sistem">5. Arsitektur Sistem</h2>
+<p>Sistem terdiri dari tiga node utama, yaitu <code>node1</code>, <code>node2</code>, dan <code>node3</code>. Setiap node menjalankan service Python berbasis <code>aiohttp</code> dan dapat saling berkomunikasi melalui HTTP.</p>
+<p>Selain tiga node tersebut, sistem juga menggunakan Redis. Redis digunakan sebagai penyimpanan tambahan untuk Distributed Queue dan Distributed Cache.</p>
+<p>Secara umum, komponen sistem terdiri dari:</p>
+<ul>
+<li><code>node1</code>, berjalan pada port 8001</li>
+<li><code>node2</code>, berjalan pada port 8002</li>
+<li><code>node3</code>, berjalan pada port 8003</li>
+<li>Redis, berjalan pada port 6379</li>
+</ul>
+<p>Setiap node memiliki komponen berikut:</p>
+<ol>
+<li>Raft Consensus</li>
+<li>Distributed Lock Manager</li>
+<li>Distributed Queue Node</li>
+<li>Distributed Cache Node</li>
+<li>Metrics endpoint</li>
+</ol>
+<p>Alur umum sistem adalah sebagai berikut:</p>
+<ol>
+<li>Client mengirim request ke salah satu node.</li>
+<li>Node memproses request sesuai fitur yang digunakan.</li>
+<li>Untuk operasi lock, request harus diproses oleh leader Raft.</li>
+<li>Untuk queue, owner queue ditentukan menggunakan consistent hashing.</li>
+<li>Untuk cache, data disimpan pada cache lokal dan Redis backing store.</li>
+<li>Node saling berkomunikasi untuk heartbeat, log replication, queue forwarding, dan cache invalidation.</li>
+</ol>
+<hr>
+<h2 id="6-implementasi-raft-consensus">6. Implementasi Raft Consensus</h2>
+<p>Raft Consensus digunakan untuk memilih leader di antara tiga node. Pada awalnya setiap node berada pada state follower. Jika follower tidak menerima heartbeat dari leader dalam waktu tertentu, maka node dapat berubah menjadi candidate dan memulai election.</p>
+<p>State dalam Raft:</p>
+<ul>
+<li>follower</li>
+<li>candidate</li>
+<li>leader</li>
+</ul>
+<p>Alur Raft yang digunakan:</p>
+<ol>
+<li>Semua node mulai sebagai follower.</li>
+<li>Jika timeout terjadi, node berubah menjadi candidate.</li>
+<li>Candidate meminta vote dari node lain.</li>
+<li>Jika mendapatkan mayoritas vote, candidate berubah menjadi leader.</li>
+<li>Leader mengirim heartbeat ke follower secara berkala.</li>
+<li>Operasi lock diproses oleh leader dan direplikasi ke follower.</li>
+</ol>
+<p>Dalam pengujian, sistem berhasil memilih satu node sebagai leader dan dua node lainnya sebagai follower.</p>
+<p>Contoh hasil:</p>
+<pre class="hljs"><code><div>node1 = leader
+node2 = follower
+node3 = follower
+</div></code></pre>
+<p>Jika request lock dikirim ke follower, sistem akan menolak request tersebut dan mengembalikan informasi <code>leader_id</code>.</p>
+<hr>
+<h2 id="7-implementasi-distributed-lock-manager">7. Implementasi Distributed Lock Manager</h2>
+<p>Distributed Lock Manager digunakan untuk mengatur akses client terhadap resource tertentu.</p>
+<p>Jenis lock yang didukung:</p>
+<ol>
+<li>Shared lock</li>
+<li>Exclusive lock</li>
+</ol>
+<p>Shared lock dapat digunakan oleh lebih dari satu client secara bersamaan selama tidak ada exclusive lock pada resource tersebut.</p>
+<p>Exclusive lock hanya dapat digunakan oleh satu client dan tidak boleh ada shared lock aktif pada resource yang sama.</p>
+<p>Aturan lock yang digunakan:</p>
+<ul>
+<li>Shared lock boleh dimiliki banyak client.</li>
+<li>Exclusive lock hanya boleh dimiliki satu client.</li>
+<li>Exclusive lock tidak dapat diberikan jika masih ada shared lock.</li>
+<li>Shared lock tidak dapat diberikan jika resource sedang dikunci exclusive oleh client lain.</li>
+<li>Operasi lock harus diproses melalui leader Raft.</li>
+</ul>
+<p>Endpoint utama:</p>
+<pre class="hljs"><code><div>POST /lock/acquire
+POST /lock/release
+GET  /lock/status
+</div></code></pre>
+<p>Contoh pengujian shared lock menunjukkan bahwa dua client dapat mengambil shared lock pada resource yang sama.</p>
+<p>Contoh pengujian exclusive lock menunjukkan bahwa exclusive lock gagal diberikan ketika shared lock masih aktif.</p>
+<hr>
+<h2 id="8-deadlock-detection">8. Deadlock Detection</h2>
+<p>Deadlock detection diimplementasikan menggunakan wait-for graph.</p>
+<p>Wait-for graph menyimpan hubungan antar client yang sedang saling menunggu resource.</p>
+<p>Contoh skenario:</p>
+<ol>
+<li><code>client-X</code> memegang <code>deadlock-X</code>.</li>
+<li><code>client-Y</code> memegang <code>deadlock-Y</code>.</li>
+<li><code>client-X</code> mencoba mengambil <code>deadlock-Y</code>.</li>
+<li><code>client-Y</code> mencoba mengambil <code>deadlock-X</code>.</li>
+</ol>
+<p>Kondisi tersebut menghasilkan siklus:</p>
+<pre class="hljs"><code><div>client-X -&gt; client-Y -&gt; client-X
+</div></code></pre>
+<p>Jika siklus ditemukan, sistem mengembalikan response:</p>
+<pre class="hljs"><code><div><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;reason&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;deadlock detected&quot;</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa sistem berhasil mendeteksi deadlock. Pada endpoint <code>/lock/status</code>, field <code>deadlock_detected</code> bernilai <code>true</code>.</p>
+<hr>
+<h2 id="9-implementasi-distributed-queue">9. Implementasi Distributed Queue</h2>
+<p>Distributed Queue digunakan untuk menangani producer dan consumer secara terdistribusi.</p>
+<p>Sistem menggunakan consistent hashing untuk menentukan node owner dari sebuah queue. Jika request dikirim ke node yang bukan owner, request akan diteruskan ke owner queue yang benar.</p>
+<p>Redis digunakan untuk menyimpan data queue. Dengan menggunakan Redis, message tidak hanya tersimpan pada memory lokal node.</p>
+<p>Komponen queue:</p>
+<ul>
+<li>ready queue</li>
+<li>processing queue</li>
+<li>queue metrics</li>
+</ul>
+<p>Alur enqueue:</p>
+<ol>
+<li>Producer mengirim message ke node.</li>
+<li>Sistem menentukan owner queue menggunakan consistent hashing.</li>
+<li>Owner queue menyimpan message ke Redis ready queue.</li>
+</ol>
+<p>Alur dequeue:</p>
+<ol>
+<li>Consumer meminta message.</li>
+<li>Message diambil dari ready queue.</li>
+<li>Message dipindahkan ke processing queue.</li>
+<li>Consumer menerima message.</li>
+</ol>
+<p>Alur ACK:</p>
+<ol>
+<li>Consumer selesai memproses message.</li>
+<li>Consumer mengirim ACK.</li>
+<li>Message dihapus dari processing queue.</li>
+</ol>
+<p>At-least-once delivery dicapai karena message tidak langsung hilang saat diambil consumer. Message baru dihapus setelah consumer mengirim ACK.</p>
+<p>Endpoint utama:</p>
+<pre class="hljs"><code><div>POST /queue/enqueue
+POST /queue/dequeue
+POST /queue/ack
+POST /queue/recover
+GET  /queue/status
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa enqueue, dequeue, dan ACK berhasil berjalan.</p>
+<hr>
+<h2 id="10-implementasi-distributed-cache-coherence">10. Implementasi Distributed Cache Coherence</h2>
+<p>Distributed Cache Coherence digunakan agar cache pada beberapa node tetap konsisten.</p>
+<p>Protocol yang digunakan adalah MESI.</p>
+<p>State MESI:</p>
+<h2 id="state---keterangan">State - Keterangan</h2>
+<p>M - Modified, data sudah dimodifikasi pada cache lokal
+E - Exclusive, data hanya dimiliki oleh satu node
+S - Shared, data dibaca oleh lebih dari satu node
+I - Invalid, data cache sudah tidak valid-</p>
+<p>Redis digunakan sebagai backing store. Cache lokal digunakan untuk mempercepat akses baca.</p>
+<p>Alur write cache:</p>
+<ol>
+<li>Client menulis data ke salah satu node.</li>
+<li>Node menyimpan data ke Redis.</li>
+<li>Node menyimpan data ke cache lokal dengan state <code>M</code>.</li>
+<li>Node mengirim invalidation ke node lain.</li>
+<li>Node lain menandai cache sebagai <code>I</code>.</li>
+</ol>
+<p>Alur read cache:</p>
+<ol>
+<li>Jika data ada di cache lokal dan valid, maka terjadi cache hit.</li>
+<li>Jika data tidak ada atau invalid, maka node mengambil data dari Redis.</li>
+<li>Data dari Redis disimpan kembali ke cache lokal.</li>
+</ol>
+<p>Sistem juga menggunakan LRU replacement policy. Kapasitas cache lokal dibatasi. Jika jumlah data melebihi kapasitas, data yang paling lama tidak digunakan akan dikeluarkan.</p>
+<p>Endpoint utama:</p>
+<pre class="hljs"><code><div>POST   /cache/{key}
+GET    /cache/{key}
+DELETE /cache/{key}
+GET    /cache/status
+GET    /metrics
+</div></code></pre>
+<p>Hasil pengujian menunjukkan:</p>
+<ul>
+<li>cache write menghasilkan state <code>M</code>,</li>
+<li>read pertama dari node lain menghasilkan cache miss,</li>
+<li>read kedua menghasilkan cache hit,</li>
+<li>update data mengubah cache node lain menjadi state <code>I</code>,</li>
+<li>LRU eviction berjalan ketika kapasitas cache penuh.</li>
+</ul>
+<hr>
+<h2 id="11-containerization">11. Containerization</h2>
+<p>Sistem dijalankan menggunakan Docker dan Docker Compose.</p>
+<p>Service yang dijalankan:</p>
+<h2 id="service---port">Service - Port</h2>
+<p>Redis - 6379
+node1 - 8001
+node2 - 8002
+node3 - 8003</p>
+<p>File Docker yang digunakan:</p>
+<pre class="hljs"><code><div>docker/Dockerfile.node
+docker/docker-compose.yml
+</div></code></pre>
+<p>Command untuk menjalankan sistem:</p>
+<pre class="hljs"><code><div>docker compose -f docker/docker-compose.yml up --build
+</div></code></pre>
+<p>Hasil pengujian menggunakan <code>docker ps</code> menunjukkan bahwa seluruh container berhasil berjalan, yaitu:</p>
+<ul>
+<li>distributed-redis</li>
+<li>distributed-node1</li>
+<li>distributed-node2</li>
+<li>distributed-node3</li>
+</ul>
+<p>Dengan Docker Compose, semua komponen sistem dapat dijalankan secara bersamaan dalam satu network.</p>
+<hr>
+<h2 id="12-pengujian-sistem">12. Pengujian Sistem</h2>
+<p>Pengujian dilakukan untuk memastikan bahwa semua fitur berjalan sesuai requirement. Pengujian dilakukan melalui terminal PowerShell dengan mengakses endpoint API pada node yang berjalan menggunakan Docker Compose.</p>
+<p>Pengujian mencakup beberapa bagian utama, yaitu Docker container, Raft leader election, distributed lock, deadlock detection, network partition, distributed queue, distributed cache coherence, cache invalidation, dan LRU eviction.</p>
+<hr>
+<h3 id="121-pengujian-docker">12.1 Pengujian Docker</h3>
+<p>Pengujian Docker dilakukan untuk memastikan bahwa semua service berhasil berjalan dalam container.</p>
+<p>Command yang digunakan:</p>
+<pre class="hljs"><code><div>docker ps
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa Redis, node1, node2, dan node3 berjalan dengan status aktif.</p>
+<p>Container yang berjalan:</p>
+<ul>
+<li><code>distributed-redis</code></li>
+<li><code>distributed-node1</code></li>
+<li><code>distributed-node2</code></li>
+<li><code>distributed-node3</code></li>
+</ul>
+<p>Screenshot: <code>01_docker_containers_running.png</code></p>
+<hr>
+<h3 id="122-pengujian-raft-leader-election">12.2 Pengujian Raft Leader Election</h3>
+<p>Pengujian Raft dilakukan untuk memastikan bahwa cluster dapat memilih satu leader dan dua follower.</p>
+<p>Endpoint yang digunakan:</p>
+<pre class="hljs"><code><div>GET /raft/status
+</div></code></pre>
+<p>Pengujian dilakukan pada node1, node2, dan node3.</p>
+<p>Command yang digunakan:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/raft/status
+<span class="hljs-built_in">Invoke-RestMethod</span> http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8002</span>/raft/status
+<span class="hljs-built_in">Invoke-RestMethod</span> http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8003</span>/raft/status
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa terdapat satu node sebagai leader dan dua node sebagai follower. Hal ini membuktikan bahwa proses leader election pada Raft berhasil berjalan.</p>
+<p>Screenshot: <code>02_raft_leader_follower.png</code></p>
+<hr>
+<h3 id="123-pengujian-shared-lock">12.3 Pengujian Shared Lock</h3>
+<p>Pengujian shared lock dilakukan untuk memastikan bahwa lebih dari satu client dapat mengambil shared lock pada resource yang sama.</p>
+<p>Resource yang digunakan adalah:</p>
+<pre class="hljs"><code><div>docker-file-A
+</div></code></pre>
+<p>Client yang digunakan:</p>
+<ul>
+<li><code>client-1</code></li>
+<li><code>client-2</code></li>
+</ul>
+<p>Command untuk client-1:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/lock/acquire `
+  <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+  <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;resource&quot;:&quot;docker-file-A&quot;,&quot;client_id&quot;:&quot;client-1&quot;,&quot;lock_type&quot;:&quot;shared&quot;}&#x27;</span>
+</div></code></pre>
+<p>Command untuk client-2:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/lock/acquire `
+  <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+  <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;resource&quot;:&quot;docker-file-A&quot;,&quot;client_id&quot;:&quot;client-2&quot;,&quot;lock_type&quot;:&quot;shared&quot;}&#x27;</span>
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa <code>client-1</code> dan <code>client-2</code> berhasil mendapatkan shared lock pada resource yang sama. Hal ini membuktikan bahwa shared lock dapat digunakan oleh lebih dari satu client secara bersamaan.</p>
+<p>Screenshot:</p>
+<ul>
+<li><code>03a_shared_lock_client1_success.png</code></li>
+<li><code>03b_shared_lock_client2_success.png</code></li>
+</ul>
+<hr>
+<h3 id="124-pengujian-exclusive-lock-conflict">12.4 Pengujian Exclusive Lock Conflict</h3>
+<p>Pengujian exclusive lock conflict dilakukan untuk memastikan bahwa exclusive lock tidak dapat diberikan ketika resource masih digunakan oleh shared lock.</p>
+<p>Command yang digunakan:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">try</span> {
+  <span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/lock/acquire `
+    <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+    <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;resource&quot;:&quot;docker-file-A&quot;,&quot;client_id&quot;:&quot;client-3&quot;,&quot;lock_type&quot;:&quot;exclusive&quot;}&#x27;</span>
+} <span class="hljs-keyword">catch</span> {
+  <span class="hljs-variable">$_</span>.ErrorDetails.Message
+}
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa sistem menolak request exclusive lock karena resource masih digunakan oleh client lain.</p>
+<p>Contoh response:</p>
+<pre class="hljs"><code><div><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;resource&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;docker-file-A&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;client_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;client-3&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;lock_type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;exclusive&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;reason&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;lock is currently held by another client&quot;</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Screenshot: <code>04_exclusive_lock_conflict.png</code></p>
+<hr>
+<h3 id="125-pengujian-deadlock-detection">12.5 Pengujian Deadlock Detection</h3>
+<p>Pengujian deadlock detection dilakukan dengan membuat dua client saling menunggu resource.</p>
+<p>Skenario yang digunakan:</p>
+<ol>
+<li><code>client-X</code> memegang resource <code>deadlock-X</code>.</li>
+<li><code>client-Y</code> memegang resource <code>deadlock-Y</code>.</li>
+<li><code>client-X</code> mencoba mengambil resource <code>deadlock-Y</code>.</li>
+<li><code>client-Y</code> mencoba mengambil resource <code>deadlock-X</code>.</li>
+</ol>
+<p>Kondisi tersebut membentuk siklus pada wait-for graph:</p>
+<pre class="hljs"><code><div>client-X -&gt; client-Y -&gt; client-X
+</div></code></pre>
+<p>Command awal untuk mengambil lock:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/lock/acquire `
+  <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+  <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;resource&quot;:&quot;deadlock-X&quot;,&quot;client_id&quot;:&quot;client-X&quot;,&quot;lock_type&quot;:&quot;exclusive&quot;}&#x27;</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/lock/acquire `
+  <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+  <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;resource&quot;:&quot;deadlock-Y&quot;,&quot;client_id&quot;:&quot;client-Y&quot;,&quot;lock_type&quot;:&quot;exclusive&quot;}&#x27;</span>
+</div></code></pre>
+<p>Command untuk membuat kondisi saling menunggu:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">try</span> {
+  <span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/lock/acquire `
+    <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+    <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;resource&quot;:&quot;deadlock-Y&quot;,&quot;client_id&quot;:&quot;client-X&quot;,&quot;lock_type&quot;:&quot;exclusive&quot;}&#x27;</span>
+} <span class="hljs-keyword">catch</span> {
+  <span class="hljs-variable">$_</span>.ErrorDetails.Message
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">try</span> {
+  <span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/lock/acquire `
+    <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+    <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;resource&quot;:&quot;deadlock-X&quot;,&quot;client_id&quot;:&quot;client-Y&quot;,&quot;lock_type&quot;:&quot;exclusive&quot;}&#x27;</span>
+} <span class="hljs-keyword">catch</span> {
+  <span class="hljs-variable">$_</span>.ErrorDetails.Message
+}
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa sistem berhasil mendeteksi deadlock. Response menampilkan <code>reason: deadlock detected</code>.</p>
+<p>Status lock juga menunjukkan bahwa <code>deadlock_detected</code> bernilai <code>true</code>.</p>
+<p>Screenshot:</p>
+<ul>
+<li><code>05a_deadlock_detected_response.png</code></li>
+<li><code>05b_deadlock_wait_for_graph.png</code></li>
+</ul>
+<hr>
+<h3 id="126-pengujian-network-partition">12.6 Pengujian Network Partition</h3>
+<p>Pengujian network partition dilakukan untuk memastikan bahwa sistem dapat menangani kondisi ketika salah satu node tidak dapat berkomunikasi secara normal.</p>
+<p>Endpoint yang digunakan:</p>
+<pre class="hljs"><code><div>POST /partition/enable
+</div></code></pre>
+<p>Command yang digunakan:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/partition/enable
+</div></code></pre>
+<p>Setelah partition diaktifkan, status Raft dicek kembali menggunakan command:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/raft/status
+<span class="hljs-built_in">Invoke-RestMethod</span> http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8002</span>/raft/status
+<span class="hljs-built_in">Invoke-RestMethod</span> http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8003</span>/raft/status
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa <code>node1</code> berada dalam kondisi <code>partitioned: True</code>. Setelah partition terjadi, cluster tetap dapat berjalan dan memilih leader lain.</p>
+<p>Screenshot: <code>06_network_partition_scenario.png</code></p>
+<hr>
+<h3 id="127-pengujian-distributed-queue-enqueue">12.7 Pengujian Distributed Queue Enqueue</h3>
+<p>Pengujian enqueue dilakukan untuk memastikan bahwa producer dapat memasukkan message ke distributed queue.</p>
+<p>Endpoint yang digunakan:</p>
+<pre class="hljs"><code><div>POST /queue/enqueue
+</div></code></pre>
+<p>Command yang digunakan:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/queue/enqueue `
+  <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+  <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;queue_name&quot;:&quot;docker-orders&quot;,&quot;producer_id&quot;:&quot;producer-1&quot;,&quot;payload&quot;:{&quot;order_id&quot;:201,&quot;item&quot;:&quot;mouse&quot;}}&#x27;</span>
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa message berhasil masuk ke queue <code>docker-orders</code>. Response menampilkan <code>success: True</code>, <code>message: message enqueued</code>, dan <code>message_id</code>.</p>
+<p>Screenshot: <code>07_queue_enqueue.png</code></p>
+<hr>
+<h3 id="128-pengujian-distributed-queue-dequeue">12.8 Pengujian Distributed Queue Dequeue</h3>
+<p>Pengujian dequeue dilakukan untuk memastikan bahwa consumer dapat mengambil message dari queue.</p>
+<p>Endpoint yang digunakan:</p>
+<pre class="hljs"><code><div>POST /queue/dequeue
+</div></code></pre>
+<p>Command yang digunakan:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/queue/dequeue `
+  <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+  <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;queue_name&quot;:&quot;docker-orders&quot;,&quot;consumer_id&quot;:&quot;consumer-1&quot;}&#x27;</span>
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa consumer berhasil mengambil message dari queue. Response menampilkan <code>message_id</code>, <code>payload</code>, dan jumlah <code>attempts</code>.</p>
+<p>Screenshot: <code>08a_queue_dequeue.png</code></p>
+<hr>
+<h3 id="129-pengujian-distributed-queue-ack">12.9 Pengujian Distributed Queue ACK</h3>
+<p>Pengujian ACK dilakukan untuk memastikan bahwa message yang sudah diproses consumer dapat dikonfirmasi sebagai selesai.</p>
+<p>Endpoint yang digunakan:</p>
+<pre class="hljs"><code><div>POST /queue/ack
+</div></code></pre>
+<p>Command yang digunakan:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/queue/ack `
+  <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+  <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;queue_name&quot;:&quot;docker-orders&quot;,&quot;message_id&quot;:&quot;5f8685fd-d471-472b-af33-1eedd716e3ca&quot;,&quot;consumer_id&quot;:&quot;consumer-1&quot;}&#x27;</span>
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa message berhasil di-ACK. Response menampilkan <code>success: True</code> dan <code>message: message acknowledged</code>.</p>
+<p>Screenshot: <code>08b_queue_ack.png</code></p>
+<hr>
+<h3 id="1210-pengujian-cache-write-modified">12.10 Pengujian Cache Write Modified</h3>
+<p>Pengujian cache write dilakukan untuk memastikan bahwa node dapat menulis data ke distributed cache.</p>
+<p>Endpoint yang digunakan:</p>
+<pre class="hljs"><code><div>POST /cache/product-1
+</div></code></pre>
+<p>Command yang digunakan:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/cache/product<span class="hljs-literal">-1</span> `
+  <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+  <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;client_id&quot;:&quot;client-1&quot;,&quot;value&quot;:{&quot;name&quot;:&quot;Keyboard&quot;,&quot;stock&quot;:50},&quot;propagation&quot;:&quot;invalidate&quot;}&#x27;</span>
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa data berhasil ditulis ke cache. State cache berubah menjadi <code>M</code> atau Modified sesuai dengan protokol MESI.</p>
+<p>Screenshot: <code>09_cache_write_modified.png</code></p>
+<hr>
+<h3 id="1211-pengujian-cache-miss">12.11 Pengujian Cache Miss</h3>
+<p>Pengujian cache miss dilakukan dengan membaca data <code>product-1</code> dari node2 untuk pertama kali.</p>
+<p>Endpoint yang digunakan:</p>
+<pre class="hljs"><code><div>GET /cache/product-1
+</div></code></pre>
+<p>Command yang digunakan:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8002</span>/cache/product<span class="hljs-literal">-1</span> | <span class="hljs-built_in">ConvertTo-Json</span> <span class="hljs-literal">-Depth</span> <span class="hljs-number">5</span>
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa read pertama menghasilkan cache miss. Hal ini terjadi karena data belum tersedia pada cache lokal node2, sehingga node2 mengambil data dari Redis backing store.</p>
+<p>Output penting:</p>
+<pre class="hljs"><code><div><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;source&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;redis_backing_store&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;cache_hit&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;state&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;S&quot;</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Screenshot: <code>10a_cache_miss.png</code></p>
+<hr>
+<h3 id="1212-pengujian-cache-hit">12.12 Pengujian Cache Hit</h3>
+<p>Pengujian cache hit dilakukan dengan membaca ulang data <code>product-1</code> dari node2.</p>
+<p>Endpoint yang digunakan:</p>
+<pre class="hljs"><code><div>GET /cache/product-1
+</div></code></pre>
+<p>Command yang digunakan:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8002</span>/cache/product<span class="hljs-literal">-1</span> | <span class="hljs-built_in">ConvertTo-Json</span> <span class="hljs-literal">-Depth</span> <span class="hljs-number">5</span>
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa read kedua menghasilkan cache hit. Hal ini terjadi karena data sudah tersedia pada cache lokal node2.</p>
+<p>Output penting:</p>
+<pre class="hljs"><code><div><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;source&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;local_cache&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;cache_hit&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;state&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;S&quot;</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Screenshot: <code>10b_cache_hit.png</code></p>
+<hr>
+<h3 id="1213-pengujian-cache-invalidation">12.13 Pengujian Cache Invalidation</h3>
+<p>Pengujian cache invalidation dilakukan dengan memperbarui data dari node1, lalu melihat status cache pada node2.</p>
+<p>Command update data:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> <span class="hljs-literal">-Method</span> Post http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/cache/product<span class="hljs-literal">-1</span> `
+  <span class="hljs-literal">-ContentType</span> <span class="hljs-string">&quot;application/json&quot;</span> `
+  <span class="hljs-literal">-Body</span> <span class="hljs-string">&#x27;{&quot;client_id&quot;:&quot;client-1&quot;,&quot;value&quot;:{&quot;name&quot;:&quot;Keyboard&quot;,&quot;stock&quot;:30},&quot;propagation&quot;:&quot;invalidate&quot;}&#x27;</span>
+</div></code></pre>
+<p>Command cek status cache node2:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8002</span>/cache/status | <span class="hljs-built_in">ConvertTo-Json</span> <span class="hljs-literal">-Depth</span> <span class="hljs-number">10</span>
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa cache pada node2 berubah menjadi state <code>I</code>. Hal ini menunjukkan bahwa invalidation berhasil dikirim ke node lain dan cache lama tidak lagi dianggap valid.</p>
+<p>Screenshot: <code>11_cache_invalidation.png</code></p>
+<hr>
+<h3 id="1214-pengujian-lru-eviction">12.14 Pengujian LRU Eviction</h3>
+<p>Pengujian LRU eviction dilakukan untuk memastikan bahwa cache replacement policy berjalan ketika kapasitas cache penuh.</p>
+<p>Pada implementasi ini, kapasitas cache lokal diset menjadi 3 item. Jika lebih dari 3 item ditulis ke cache, sistem akan menghapus item yang paling lama tidak digunakan.</p>
+<p>Command untuk melihat status cache:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">Invoke-RestMethod</span> http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8001</span>/cache/status | <span class="hljs-built_in">ConvertTo-Json</span> <span class="hljs-literal">-Depth</span> <span class="hljs-number">10</span>
+</div></code></pre>
+<p>Hasil pengujian menunjukkan bahwa nilai <code>evictions</code> bertambah. Hal ini membuktikan bahwa LRU replacement policy berhasil berjalan.</p>
+<p>Output penting:</p>
+<pre class="hljs"><code><div><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;capacity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;evictions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Screenshot: <code>12_cache_lru_eviction.png</code></p>
+<hr>
+<p>Seluruh hasil pengujian fitur utama disertakan pada bagian Lampiran Screenshot. Screenshot tersebut meliputi pengujian Docker, Raft leader election, distributed lock, deadlock detection, network partition, distributed queue, distributed cache coherence, LRU eviction, dan benchmark Locust.</p>
+<h2 id="13-performance-analysis">13. Performance Analysis</h2>
+<p>Performance testing dilakukan menggunakan Locust.</p>
+<p>Endpoint yang diuji:</p>
+<ul>
+<li>Health Check</li>
+<li>Raft Status</li>
+<li>Queue Enqueue</li>
+<li>Queue Dequeue</li>
+<li>Queue ACK</li>
+<li>Cache Write</li>
+<li>Cache Read</li>
+</ul>
+<p>Pengujian dilakukan dengan tiga skenario jumlah user:</p>
+<ol>
+<li>5 users</li>
+<li>10 users</li>
+<li>20 users</li>
+</ol>
+<h3 id="131-hasil-benchmark">13.1 Hasil Benchmark</h3>
+<h2 id="skenario---total-requests---fails---median-latency---average-latency---min-latency---max-latency---current-rps---failuress--">Skenario - Total Requests - Fails - Median Latency - Average Latency - Min Latency - Max Latency - Current RPS - Failures/s -</h2>
+<p>5 users - 353 - 0 - 8 ms - 8.37 ms - 2 ms - 20 ms - 3.4 - 0
+10 users - 750 - 0 - 7 ms - 7.98 ms - 2 ms - 33 ms - 6 - 0
+20 users - 511 - 0 - 7 ms - 7.89 ms - 1 ms - 38 ms - 12 - 0</p>
+<p>Screenshot:</p>
+<ul>
+<li><code>benchmark_5_users.png</code></li>
+<li><code>benchmark_10_users.png</code></li>
+<li><code>benchmark_20_users.png</code></li>
+</ul>
+<h3 id="132-analisis-throughput">13.2 Analisis Throughput</h3>
+<p>Throughput dapat dilihat dari nilai Current RPS.</p>
+<p>Pada skenario 5 users, sistem menghasilkan sekitar 3.4 RPS. Pada skenario 10 users, RPS meningkat menjadi 6. Pada skenario 20 users, RPS meningkat menjadi 12.</p>
+<p>Hal ini menunjukkan bahwa sistem mampu menangani peningkatan jumlah user dengan throughput yang meningkat.</p>
+<h3 id="133-analisis-latency">13.3 Analisis Latency</h3>
+<p>Average latency pada semua skenario tetap berada di bawah 10 ms.</p>
+<p>Hasil latency:</p>
+<ul>
+<li>5 users: 8.37 ms</li>
+<li>10 users: 7.98 ms</li>
+<li>20 users: 7.89 ms</li>
+</ul>
+<p>Latency yang stabil menunjukkan bahwa sistem masih mampu merespons request dengan baik pada skenario pengujian ringan sampai sedang.</p>
+<h3 id="134-analisis-failure-rate">13.4 Analisis Failure Rate</h3>
+<p>Pada seluruh skenario, jumlah failure adalah 0.</p>
+<p>Hal ini menunjukkan bahwa endpoint yang diuji dapat berjalan stabil selama proses load testing.</p>
+<h3 id="135-kesimpulan-performance">13.5 Kesimpulan Performance</h3>
+<p>Berdasarkan hasil Locust, sistem dapat menangani peningkatan jumlah user dari 5 sampai 20 user tanpa menghasilkan failure. Throughput meningkat seiring bertambahnya jumlah user, sedangkan latency tetap stabil di bawah 10 ms.</p>
+<p>Dengan demikian, sistem dapat dikatakan stabil pada skenario pengujian yang dilakukan.</p>
+<hr>
+<h2 id="14-kendala-dan-solusi">14. Kendala dan Solusi</h2>
+<p>Selama proses implementasi dan pengujian, terdapat beberapa kendala.</p>
+<h3 id="141-port-redis-bentrok">14.1 Port Redis Bentrok</h3>
+<p>Masalah yang muncul:</p>
+<pre class="hljs"><code><div>Bind for 0.0.0.0:6379 failed: port is already allocated
+</div></code></pre>
+<p>Penyebabnya adalah Redis sudah berjalan dari container sebelumnya.</p>
+<p>Solusi:</p>
+<pre class="hljs"><code><div>docker stop redis-dss
+docker <span class="hljs-built_in">rm</span> redis-dss
+docker compose -f docker/docker-compose.yml down
+docker compose -f docker/docker-compose.yml up --build
+</div></code></pre>
+<hr>
+<h3 id="142-semua-node-menjadi-follower">14.2 Semua Node Menjadi Follower</h3>
+<p>Pada awal konfigurasi Docker, semua node sempat menjadi follower.</p>
+<p>Penyebabnya adalah node menggunakan <code>0.0.0.0</code> sebagai address sehingga tidak mengenali dirinya sendiri dalam Docker network.</p>
+<p>Solusi yang digunakan adalah menambahkan <code>NODE_ADDRESS</code> pada Docker Compose.</p>
+<p>Contoh:</p>
+<pre class="hljs"><code><div><span class="hljs-attr">NODE_ADDRESS:</span> <span class="hljs-string">http://node1:8001</span>
+</div></code></pre>
+<hr>
+<h3 id="143-request-lock-dikirim-ke-follower">14.3 Request Lock Dikirim ke Follower</h3>
+<p>Saat testing, leader dapat berubah. Jika request lock dikirim ke follower, sistem mengembalikan response bahwa node tersebut bukan leader.</p>
+<p>Solusi:</p>
+<ol>
+<li>Cek leader menggunakan <code>/raft/status</code>.</li>
+<li>Kirim request lock ke node leader.</li>
+<li>Gunakan mapping port:
+<ul>
+<li>node1 = 8001</li>
+<li>node2 = 8002</li>
+<li>node3 = 8003</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="144-cache-read-menghasilkan-failure-di-locust">14.4 Cache Read Menghasilkan Failure di Locust</h3>
+<p>Pada awal benchmark, cache read ke key yang belum ada menghasilkan 404 dan dianggap failure oleh Locust.</p>
+<p>Solusi:</p>
+<p>Script Locust diperbaiki agar status 404 pada cache read dianggap kondisi normal, karena key not found merupakan kemungkinan yang wajar pada sistem cache.</p>
+<hr>
+<h2 id="15-kesimpulan">15. Kesimpulan</h2>
+<p>Project Distributed Synchronization System berhasil mengimplementasikan simulasi sistem terdistribusi dengan tiga node.</p>
+<p>Fitur utama yang berhasil dibuat adalah:</p>
+<ol>
+<li>Distributed Lock Manager berbasis simplified Raft Consensus.</li>
+<li>Shared lock dan exclusive lock.</li>
+<li>Deadlock detection menggunakan wait-for graph.</li>
+<li>Distributed Queue menggunakan consistent hashing.</li>
+<li>Message persistence dan at-least-once delivery menggunakan Redis.</li>
+<li>Distributed Cache Coherence menggunakan protokol MESI.</li>
+<li>Cache invalidation dan LRU replacement policy.</li>
+<li>Metrics endpoint untuk monitoring.</li>
+<li>Dockerfile dan Docker Compose untuk containerization.</li>
+<li>Load testing menggunakan Locust.</li>
+</ol>
+<p>Hasil pengujian menunjukkan bahwa sistem dapat berjalan dengan baik. Raft berhasil memilih leader, lock manager dapat menangani shared dan exclusive lock, deadlock dapat terdeteksi, queue dapat melakukan enqueue-dequeue-ACK, dan cache dapat melakukan invalidation serta eviction.</p>
+<p>Performance testing juga menunjukkan hasil yang stabil. Pada skenario 5, 10, dan 20 users, sistem tidak menghasilkan failure dan latency rata-rata tetap rendah.</p>
+<p>Secara keseluruhan, sistem ini sudah memenuhi requirement utama tugas dan dapat digunakan sebagai simulasi konsep sinkronisasi pada distributed systems.</p>
+<hr>
+<h2 id="16-link-repository-dan-video">16. Link Repository dan Video</h2>
+<p>GitHub Repository: https://github.com/aldrisptra/distributed-sync-system<br>
+Video Demo YouTube: https://youtu.be/MFytktbxrgc</p>
+<hr>
+<h2 id="17-lampiran-screenshot">17. Lampiran Screenshot</h2>
+<p>Bagian ini berisi screenshot hasil pengujian sistem. Screenshot digunakan sebagai bukti bahwa setiap fitur utama berjalan sesuai requirement.</p>
+<h3 id="171-docker-containers-running">17.1 Docker Containers Running</h3>
+<p>Screenshot berikut menunjukkan bahwa Redis, node1, node2, dan node3 berhasil berjalan menggunakan Docker Compose.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/01_docker_containers_running.png" width="700">
+<hr>
+<h3 id="172-raft-leader-dan-follower">17.2 Raft Leader dan Follower</h3>
+<p>Screenshot berikut menunjukkan hasil leader election pada Raft. Terdapat satu node sebagai leader dan dua node sebagai follower.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/02_raft_leader_follower.png" width="700">
+<hr>
+<h3 id="173-shared-lock-berhasil">17.3 Shared Lock Berhasil</h3>
+<p>Screenshot berikut menunjukkan client-1 berhasil mengambil shared lock pada resource <code>docker-file-A</code>.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/03a_shared_lock_client1_success.png" width="700">
+<p>Screenshot berikut menunjukkan client-2 juga berhasil mengambil shared lock pada resource yang sama. Hal ini membuktikan bahwa shared lock dapat dimiliki oleh lebih dari satu client.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/03b_shared_lock_client2_success.png" width="700">
+<hr>
+<h3 id="174-exclusive-lock-conflict">17.4 Exclusive Lock Conflict</h3>
+<p>Screenshot berikut menunjukkan bahwa exclusive lock ditolak ketika resource masih digunakan oleh shared lock.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/04_exclusive_lock_conflict.png" width="700">
+<hr>
+<h3 id="175-deadlock-detection">17.5 Deadlock Detection</h3>
+<p>Screenshot berikut menunjukkan response sistem ketika deadlock berhasil terdeteksi.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/05a_deadlock_detected_response.png" width="700">
+<p>Screenshot berikut menunjukkan wait-for graph yang membentuk siklus antara <code>client-X</code> dan <code>client-Y</code>, serta status <code>deadlock_detected</code> bernilai <code>true</code>.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/05b_deadlock_wait_for_graph.png" width="700">
+<hr>
+<h3 id="176-network-partition-scenario">17.6 Network Partition Scenario</h3>
+<p>Screenshot berikut menunjukkan simulasi network partition. Pada skenario ini, <code>node1</code> berada dalam kondisi partitioned dan cluster memilih <code>node2</code> sebagai leader.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/06_network_partition_scenario.png" width="700">
+<hr>
+<h3 id="177-distributed-queue-enqueue">17.7 Distributed Queue Enqueue</h3>
+<p>Screenshot berikut menunjukkan message berhasil dimasukkan ke distributed queue.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/07_queue_enqueue.png" width="700">
+<hr>
+<h3 id="178-distributed-queue-dequeue">17.8 Distributed Queue Dequeue</h3>
+<p>Screenshot berikut menunjukkan consumer berhasil mengambil message dari queue.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/08a_queue_dequeue.png" width="700">
+<hr>
+<h3 id="179-distributed-queue-ack">17.9 Distributed Queue ACK</h3>
+<p>Screenshot berikut menunjukkan message berhasil di-ACK setelah diproses oleh consumer.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/08b_queue_ack.png" width="700">
+<hr>
+<h3 id="1710-cache-write-modified">17.10 Cache Write Modified</h3>
+<p>Screenshot berikut menunjukkan data berhasil ditulis ke cache dengan state <code>M</code> atau Modified.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/09_cache_write_modified.png" width="700">
+<hr>
+<h3 id="1711-cache-miss">17.11 Cache Miss</h3>
+<p>Screenshot berikut menunjukkan cache miss. Data belum tersedia di cache lokal node2 sehingga data diambil dari Redis backing store.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/10a_cache_miss.png" width="700">
+<hr>
+<h3 id="1712-cache-hit">17.12 Cache Hit</h3>
+<p>Screenshot berikut menunjukkan cache hit. Data sudah tersedia di cache lokal node2 sehingga tidak perlu mengambil ulang dari Redis.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/10b_cache_hit.png" width="700">
+<hr>
+<h3 id="1713-cache-invalidation">17.13 Cache Invalidation</h3>
+<p>Screenshot berikut menunjukkan cache invalidation. Setelah data diperbarui dari node1, cache pada node2 berubah menjadi state <code>I</code>.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/11_cache_invalidation.png" width="700">
+<hr>
+<h3 id="1714-lru-eviction">17.14 LRU Eviction</h3>
+<p>Screenshot berikut menunjukkan LRU eviction. Cache memiliki kapasitas 3 item, dan metrics <code>evictions</code> bertambah ketika jumlah data melebihi kapasitas.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/12_cache_lru_eviction.png" width="700">
+<hr>
+<h3 id="1715-benchmark-5-users">17.15 Benchmark 5 Users</h3>
+<p>Screenshot berikut menunjukkan hasil benchmark menggunakan Locust dengan 5 users.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/13_benchmark_5_users.png" width="700">
+<hr>
+<h3 id="1716-benchmark-10-users">17.16 Benchmark 10 Users</h3>
+<p>Screenshot berikut menunjukkan hasil benchmark menggunakan Locust dengan 10 users.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/14_benchmark_10_users.png" width="700">
+<hr>
+<h3 id="1717-benchmark-20-users">17.17 Benchmark 20 Users</h3>
+<p>Screenshot berikut menunjukkan hasil benchmark menggunakan Locust dengan 20 users.</p>
+<img src="file:///c:/Users/ALDRI/Documents/PROYEK/distributed-sync-system/screenshots/15_benchmark_20_users.png" width="700">
+<h2 id="18-catatan-akhir">18. Catatan Akhir</h2>
+<p>Sistem ini merupakan simulasi distributed system untuk kebutuhan akademik. Implementasi Raft, queue, dan cache coherence dibuat untuk menunjukkan konsep utama distributed synchronization, bukan untuk penggunaan production.</p>
+<p>Untuk pengembangan lebih lanjut, sistem dapat ditingkatkan dengan:</p>
+<ol>
+<li>Implementasi Raft yang lebih lengkap.</li>
+<li>Persistent log Raft ke storage.</li>
+<li>Security seperti API key dan RBAC.</li>
+<li>Monitoring dengan Prometheus dan Grafana.</li>
+<li>Deployment multi-region.</li>
+<li>Support scaling node secara otomatis.</li>
+</ol>
+
+</body>
+</html>
