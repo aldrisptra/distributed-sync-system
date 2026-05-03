@@ -941,7 +941,7 @@ Secara keseluruhan, sistem ini sudah memenuhi requirement utama tugas dan dapat 
 
 ## 16. Link Repository dan Video
 
-GitHub Repository: https://github.com/aldrisptra/distributed-sync-system
+GitHub Repository: https://github.com/aldrisptra/distributed-sync-system  
 Video Demo YouTube: https://youtu.be/MFytktbxrgc
 
 ---
