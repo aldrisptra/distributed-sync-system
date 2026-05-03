@@ -521,7 +521,7 @@ Screenshot yang digunakan:
 
 ## Link Video Demo
 
-Link YouTube: cooming soon ces
+Link YouTube: https://youtu.be/MFytktbxrgc
 
 ---
 
