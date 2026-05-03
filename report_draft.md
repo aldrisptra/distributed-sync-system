@@ -1,5 +1,3 @@
-# LAPORAN TUGAS 2
-
 # SISTEM PARALLEL DAN TERDISTRIBUSI
 
 # Implementasi Distributed Synchronization System
